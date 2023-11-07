@@ -113,19 +113,14 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "jsonpickle"
-version = "3.0.2"
+version = "1.3"
 description = "Python library for serializing any arbitrary object graph into JSON"
 optional = false
-python-versions = ">=3.7"
+python-versions = "*"
 files = [
-    {file = "jsonpickle-3.0.2-py3-none-any.whl", hash = "sha256:4a8442d97ca3f77978afa58068768dba7bff2dbabe79a9647bc3cdafd4ef019f"},
-    {file = "jsonpickle-3.0.2.tar.gz", hash = "sha256:e37abba4bfb3ca4a4647d28bb9f4706436f7b46c8a8333b4a718abafa8e46b37"},
+    {file = "jsonpickle-1.3-py2.py3-none-any.whl", hash = "sha256:efc6839cb341985f0c24f98650a4c1063a2877c236ffd3d7e1662f0c482bac93"},
+    {file = "jsonpickle-1.3.tar.gz", hash = "sha256:71bca2b80ae28af4e3f86629ef247100af7f97032b5ca8d791c1f8725b411d95"},
 ]
-
-[package.extras]
-docs = ["jaraco.packaging (>=3.2)", "rst.linker (>=1.9)", "sphinx"]
-testing = ["ecdsa", "feedparser", "gmpy2", "numpy", "pandas", "pymongo", "pytest (>=3.5,!=3.7.3)", "pytest-black-multipy", "pytest-checkdocs (>=1.2.3)", "pytest-cov", "pytest-flake8 (>=1.1.1)", "scikit-learn", "sqlalchemy"]
-testing-libs = ["simplejson", "ujson"]
 
 [[package]]
 name = "markupsafe"
@@ -275,4 +270,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "2011946703543781eaea4a0753f34dfddf7a294f03837db7888730dea0b36b81"
+content-hash = "37557eea040117da67aedd41aaea93b91b84d375ddbdba496c96bd9b26abf2af"
