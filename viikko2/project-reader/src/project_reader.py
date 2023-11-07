@@ -12,12 +12,14 @@ class ProjectReader:
         # tiedoston merkkijonomuotoinen sisältö
         content = request.urlopen(self._url).read().decode("utf-8")
 
-        data = toml.loads(content)
+        data = toml.loads(content)["tool"]["poetry"]
 
         # deserialisoi TOML-formaatissa oleva merkkijono ja muodosta Project-olio sen tietojen perusteella
         return Project(
-            data["tool"]["poetry"]["name"],
-            data["tool"]["poetry"]["description"],
-            data["tool"]["poetry"]["dependencies"],
-            data["tool"]["poetry"]["group"]["dev"]["dependencies"],
+            data["name"],
+            data["description"],
+            data["license"],
+            data["authors"],
+            data["dependencies"],
+            data["group"]["dev"]["dependencies"],
         )
