@@ -15,10 +15,11 @@ def main():
         player = Player(player_dict)
         players.append(player)
 
-    print("Oliot:")
-
+    print("Players from FIN\n")
+    
     for player in players:
-        print(player)
+        if player.nationality == "FIN":
+            print(player)
 
 
 if __name__ == "__main__":
