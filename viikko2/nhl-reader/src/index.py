@@ -13,10 +13,11 @@ def main():
         players.append(player)
 
     print("Players from FIN\n")
-    
-    for player in players:
-        if player.nationality == "FIN":
-            print(player)
+
+    for player in sorted(
+        filter(lambda x: x.nationality == "FIN", players), key=lambda x: x.points, reverse=True
+    ):
+        print(player)
 
 
 if __name__ == "__main__":
