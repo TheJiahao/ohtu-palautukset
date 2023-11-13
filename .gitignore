@@ -2,3 +2,6 @@ __pycache__
 .pytest_cache
 .coverage
 htmlcov
+report.html
+output.xml
+log.html
