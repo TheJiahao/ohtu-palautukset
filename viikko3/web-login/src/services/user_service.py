@@ -62,5 +62,7 @@ class UserService:
         if re.match("^([a-z]|[A-Z])*$", password):
             raise InvalidPasswordError("Password should not contain only letters")
 
+        if password != password_confirmation:
+            raise InvalidPasswordError("Password and confirmation don't match")
 
 user_service = UserService()
