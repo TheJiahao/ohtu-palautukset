@@ -45,4 +45,17 @@ Login After Successful Registration
     Go To Login Page
     Set Username    kalle
     Set Password    kalle1234
-    Click Button    Login
+    Submit Credentials
+    Login Should Succeed
+
+Login After Failed Registration
+    Set Username    kalle
+    Set Password    kalle1234
+    Set Password Confirmation    a
+    Submit Register Form
+
+    Go To Login Page
+    Set Username    kalle
+    Set Password    kalle1234
+    Submit Credentials
+    Login Should Fail With Message    Invalid username or password
