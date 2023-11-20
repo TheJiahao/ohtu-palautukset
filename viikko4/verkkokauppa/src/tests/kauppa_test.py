@@ -14,7 +14,7 @@ class TestKauppa(unittest.TestCase):
         # palautetaan aina arvo 42
         self.viitegeneraattori_mock.uusi.return_value = 42
 
-        varasto_mock = Mock()
+        self.varasto_mock = Mock()
 
         # tehdään toteutus saldo-metodille
         def varasto_saldo(tuote_id):
@@ -35,12 +35,12 @@ class TestKauppa(unittest.TestCase):
                 return Tuote(3, "salaatti", 1)
 
         # otetaan toteutukset käyttöön
-        varasto_mock.saldo.side_effect = varasto_saldo
-        varasto_mock.hae_tuote.side_effect = varasto_hae_tuote
+        self.varasto_mock.saldo.side_effect = varasto_saldo
+        self.varasto_mock.hae_tuote.side_effect = varasto_hae_tuote
 
         # alustetaan kauppa
         self.kauppa = Kauppa(
-            varasto_mock, self.pankki_mock, self.viitegeneraattori_mock
+            self.varasto_mock, self.pankki_mock, self.viitegeneraattori_mock
         )
 
     def test_ostoksen_paatyttya_pankin_metodia_tilisiirto_kutsutaan(self):
@@ -142,3 +142,12 @@ class TestKauppa(unittest.TestCase):
 
         # tarkistetaan että tässä vaiheessa viitegeneraattorin metodia uusi on kutsuttu kolme kertaa
         self.assertEqual(self.viitegeneraattori_mock.uusi.call_count, 3)
+
+    def test_poista_korista_jos_tuote_on_korissa(self):
+        self.kauppa.aloita_asiointi()
+
+        self.kauppa.lisaa_koriin(1)
+        self.assertEqual(len(self.kauppa._ostoskori._tuotteet), 1)
+
+        self.kauppa.poista_korista(1)
+        self.varasto_mock.palauta_varastoon.assert_called()
