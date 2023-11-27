@@ -1,55 +1,47 @@
+from player import Player
+
+
 class TennisGame:
     def __init__(self, player1_name, player2_name):
-        self.player1_name = player1_name
-        self.player2_name = player2_name
-        self.m_score1 = 0
-        self.m_score2 = 0
+        self.players = [Player(player1_name, 0), Player(player2_name, 0)]
+        self.scores = {0: "Love", 1: "Fifteen", 2: "Thirty", 3: "Forty"}
 
     def won_point(self, player_name):
-        if player_name == "player1":
-            self.m_score1 = self.m_score1 + 1
-        else:
-            self.m_score2 = self.m_score2 + 1
+        for player in self.players:
+            if player.name == player_name:
+                player.points += 1
 
     def get_score(self):
-        score = ""
-        temp_score = 0
+        result = ""
 
-        if self.m_score1 == self.m_score2:
-            if self.m_score1 == 0:
-                score = "Love-All"
-            elif self.m_score1 == 1:
-                score = "Fifteen-All"
-            elif self.m_score1 == 2:
-                score = "Thirty-All"
-            else:
-                score = "Deuce"
-        elif self.m_score1 >= 4 or self.m_score2 >= 4:
-            minus_result = self.m_score1 - self. m_score2
+        player1 = self.players[0]
+        player2 = self.players[1]
 
-            if minus_result == 1:
-                score = "Advantage player1"
-            elif minus_result == -1:
-                score = "Advantage player2"
-            elif minus_result >= 2:
-                score = "Win for player1"
+        if player1.points == player2.points:
+            result = self.__handle_even(player1.points)
+
+        elif player1.points >= 4 or player2.points >= 4:
+            if player1.points > player2.points:
+                result = self.__handle_advantage(player1, player2)
             else:
-                score = "Win for player2"
+                result = self.__handle_advantage(player2, player1)
         else:
-            for i in range(1, 3):
-                if i == 1:
-                    temp_score = self.m_score1
-                else:
-                    score = score + "-"
-                    temp_score = self.m_score2
+            result = f"{self.scores[player1.points]}-{self.scores[player2.points]}"
 
-                if temp_score == 0:
-                    score = score + "Love"
-                elif temp_score == 1:
-                    score = score + "Fifteen"
-                elif temp_score == 2:
-                    score = score + "Thirty"
-                elif temp_score == 3:
-                    score = score + "Forty"
+        return result
 
-        return score
+    def __handle_even(self, points):
+        if points >= 3:
+            return "Deuce"
+
+        return f"{self.scores[points]}-All"
+
+    def __handle_advantage(
+        self, player_with_advantage: Player, player_without_advantage: Player
+    ) -> str:
+        difference = player_with_advantage.points - player_without_advantage.points
+
+        if difference == 1:
+            return f"Advantage {player_with_advantage.name}"
+
+        return f"Win for {player_with_advantage.name}"
