@@ -2,6 +2,7 @@ from enum import Enum
 from tkinter import StringVar, constants, ttk
 
 from komento import Erotus, Nollaus, Summa
+from komento import Komento as Komento_luokka
 from sovelluslogiikka import Sovelluslogiikka
 
 
@@ -17,7 +18,7 @@ class Kayttoliittyma:
         self._logiikka: Sovelluslogiikka = sovellus
         self._root = root
 
-        self._komennot = {
+        self._komennot: dict[Komento, Komento_luokka] = {
             Komento.SUMMA: Summa(self._logiikka, self._lue_syote),
             Komento.EROTUS: Erotus(self._logiikka, self._lue_syote),
             Komento.NOLLAUS: Nollaus(self._logiikka, self._lue_syote),
@@ -77,9 +78,15 @@ class Kayttoliittyma:
         self._arvo_var.set(str(self._logiikka.arvo))
 
     def _suorita_komento(self, komento):
-        self._komennot[komento].suorita()
+        komento_olio = self._komennot[komento]
 
-        self._kumoa_painike["state"] = constants.NORMAL
+        if komento == Komento.KUMOA:
+            komento_olio.kumoa()
+        else:
+            komento_olio.suorita()
+
+            self._komennot[Komento.KUMOA] = komento_olio
+            self._kumoa_painike["state"] = constants.NORMAL
 
         if self._logiikka.arvo == 0:
             self._nollaus_painike["state"] = constants.DISABLED
