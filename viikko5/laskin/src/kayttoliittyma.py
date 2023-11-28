@@ -1,5 +1,8 @@
 from enum import Enum
-from tkinter import ttk, constants, StringVar
+from tkinter import StringVar, constants, ttk
+
+from komento import Erotus, Nollaus, Summa
+from sovelluslogiikka import Sovelluslogiikka
 
 
 class Komento(Enum):
@@ -10,13 +13,21 @@ class Komento(Enum):
 
 
 class Kayttoliittyma:
-    def __init__(self, sovellus, root):
-        self._sovellus = sovellus
+    def __init__(self, sovellus: Sovelluslogiikka, root):
+        self._logiikka: Sovelluslogiikka = sovellus
         self._root = root
 
-    def kaynnista(self):
+        self._komennot = {
+            Komento.SUMMA: Summa(self._logiikka, self._lue_syote),
+            Komento.EROTUS: Erotus(self._logiikka, self._lue_syote),
+            Komento.NOLLAUS: Nollaus(self._logiikka, self._lue_syote),
+        }
+
+        self._alusta()
+
+    def _alusta(self):
         self._arvo_var = StringVar()
-        self._arvo_var.set(self._sovellus.arvo())
+        self._arvo_var.set(str(self._logiikka.arvo))
         self._syote_kentta = ttk.Entry(master=self._root)
 
         tulos_teksti = ttk.Label(textvariable=self._arvo_var)
@@ -24,27 +35,27 @@ class Kayttoliittyma:
         summa_painike = ttk.Button(
             master=self._root,
             text="Summa",
-            command=lambda: self._suorita_komento(Komento.SUMMA)
+            command=lambda: self._suorita_komento(Komento.SUMMA),
         )
 
         erotus_painike = ttk.Button(
             master=self._root,
             text="Erotus",
-            command=lambda: self._suorita_komento(Komento.EROTUS)
+            command=lambda: self._suorita_komento(Komento.EROTUS),
         )
 
         self._nollaus_painike = ttk.Button(
             master=self._root,
             text="Nollaus",
             state=constants.DISABLED,
-            command=lambda: self._suorita_komento(Komento.NOLLAUS)
+            command=lambda: self._suorita_komento(Komento.NOLLAUS),
         )
 
         self._kumoa_painike = ttk.Button(
             master=self._root,
             text="Kumoa",
             state=constants.DISABLED,
-            command=lambda: self._suorita_komento(Komento.KUMOA)
+            command=lambda: self._suorita_komento(Komento.KUMOA),
         )
 
         tulos_teksti.grid(columnspan=4)
@@ -54,29 +65,29 @@ class Kayttoliittyma:
         self._nollaus_painike.grid(row=2, column=2)
         self._kumoa_painike.grid(row=2, column=3)
 
-    def _suorita_komento(self, komento):
-        arvo = 0
-
-        try:
-            arvo = int(self._syote_kentta.get())
-        except Exception:
-            pass
-
-        if komento == Komento.SUMMA:
-            self._sovellus.plus(arvo)
-        elif komento == Komento.EROTUS:
-            self._sovellus.miinus(arvo)
-        elif komento == Komento.NOLLAUS:
-            self._sovellus.nollaa()
-        elif komento == Komento.KUMOA:
-            pass
-
+    def kaynnista(self):
         self._kumoa_painike["state"] = constants.NORMAL
 
-        if self._sovellus.arvo() == 0:
+        if self._logiikka.arvo == 0:
             self._nollaus_painike["state"] = constants.DISABLED
         else:
             self._nollaus_painike["state"] = constants.NORMAL
 
         self._syote_kentta.delete(0, constants.END)
-        self._arvo_var.set(self._sovellus.arvo())
+        self._arvo_var.set(str(self._logiikka.arvo))
+
+    def _suorita_komento(self, komento):
+        self._komennot[komento].suorita()
+
+        self._kumoa_painike["state"] = constants.NORMAL
+
+        if self._logiikka.arvo == 0:
+            self._nollaus_painike["state"] = constants.DISABLED
+        else:
+            self._nollaus_painike["state"] = constants.NORMAL
+
+        self._syote_kentta.delete(0, constants.END)
+        self._arvo_var.set(str(self._logiikka.arvo))
+
+    def _lue_syote(self) -> int:
+        return int(self._syote_kentta.get())
