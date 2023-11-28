@@ -6,24 +6,16 @@ class IntJoukko:
     # tämä metodi on ainoa tapa luoda listoja
     def _luo_lista(self, koko):
         return [0] * koko
-    
-    def __init__(self, kapasiteetti=None, kasvatuskoko=None):
-        if kapasiteetti is None:
-            self.kapasiteetti = KAPASITEETTI
-        elif not isinstance(kapasiteetti, int) or kapasiteetti < 0:
-            raise Exception("Väärä kapasiteetti")  # heitin vaan jotain :D
-        else:
-            self.kapasiteetti = kapasiteetti
 
-        if kasvatuskoko is None:
-            self.kasvatuskoko = OLETUSKASVATUS
-        elif not isinstance(kapasiteetti, int) or kapasiteetti < 0:
-            raise Exception("kapasiteetti2")  # heitin vaan jotain :D
-        else:
-            self.kasvatuskoko = kasvatuskoko
+    def __init__(
+        self, kapasiteetti: int = KAPASITEETTI, kasvatuskoko: int = OLETUSKASVATUS
+    ):
+        if kapasiteetti < 0 or kasvatuskoko < 0:
+            raise ValueError("Virheellinen kapasiteetti tai kasvatuskoko")
 
+        self.kapasiteetti: int = kapasiteetti
+        self.kasvatuskoko: int = kasvatuskoko
         self.ljono = self._luo_lista(self.kapasiteetti)
-
         self.alkioiden_lkm = 0
 
     def kuuluu(self, n):
