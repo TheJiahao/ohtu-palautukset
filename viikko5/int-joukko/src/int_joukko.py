@@ -11,8 +11,6 @@ class IntJoukko:
         for j in range(indeksi, self.__alkioiden_lkm - 1):
             self.__luvut[j] = self.__luvut[j + 1]
 
-        self.__alkioiden_lkm = self.__alkioiden_lkm - 1
-
     def __kasvata_listaa(self) -> None:
         uusi_lista = self._luo_lista(self.__alkioiden_lkm + self.__kasvatuskoko)
         self.kopioi_lista(self.__luvut, uusi_lista)
@@ -48,6 +46,7 @@ class IntJoukko:
 
         indeksi = self.__luvut[0 : self.__alkioiden_lkm].index(poistettava)
         self.__siirra_vasemmalle(indeksi)
+        self.__alkioiden_lkm -= 1
 
     def kopioi_lista(self, vanha, uusi) -> None:
         for i in range(0, len(vanha)):
