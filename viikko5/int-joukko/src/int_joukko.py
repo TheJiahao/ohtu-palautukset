@@ -16,42 +16,40 @@ class IntJoukko:
         self.__kapasiteetti: int = kapasiteetti
         self.__kasvatuskoko: int = kasvatuskoko
         self.__luvut = self._luo_lista(self.__kapasiteetti)
-        self.__indeksi = 0
+        self.__alkioiden_lkm = 0
 
     def kuuluu(self, luku) -> bool:
-        return luku in self.__luvut
+        return luku in self.__luvut[0 : self.__alkioiden_lkm]
 
     def lisaa(self, luku) -> None:
-        if luku in self.__luvut:
+        if self.kuuluu(luku):
             return
 
-        if self.__indeksi >= len(self.__luvut):
-            uusi_lista = self._luo_lista(self.__indeksi + self.__kasvatuskoko)
+        self.__luvut[self.__alkioiden_lkm] = luku
+        self.__alkioiden_lkm += 1
 
+        if self.__alkioiden_lkm == len(self.__luvut) - 1:
+            uusi_lista = self._luo_lista(self.__alkioiden_lkm + self.__kasvatuskoko)
             self.kopioi_lista(self.__luvut, uusi_lista)
-
             self.__luvut = uusi_lista
-
-        self.__luvut[self.__indeksi] = luku
-        self.__indeksi += 1
 
     def poista(self, n):
         kohta = -1
         apu = 0
 
-        for i in range(0, self.__indeksi):
+        for i in range(0, self.__alkioiden_lkm):
             if n == self.__luvut[i]:
                 kohta = i  # siis luku löytyy tuosta kohdasta :D
                 self.__luvut[kohta] = 0
                 break
 
         if kohta != -1:
-            for j in range(kohta, self.__indeksi - 1):
+            for j in range(kohta, self.__alkioiden_lkm - 1):
                 apu = self.__luvut[j]
                 self.__luvut[j] = self.__luvut[j + 1]
                 self.__luvut[j + 1] = apu
 
-            self.__indeksi = self.__indeksi - 1
+            self.__alkioiden_lkm = self.__alkioiden_lkm - 1
             return True
 
         return False
@@ -61,10 +59,10 @@ class IntJoukko:
             uusi[i] = vanha[i]
 
     def mahtavuus(self):
-        return self.__indeksi
+        return self.__alkioiden_lkm
 
     def to_int_list(self):
-        taulu = self._luo_lista(self.__indeksi)
+        taulu = self._luo_lista(self.__alkioiden_lkm)
 
         for i in range(0, len(taulu)):
             taulu[i] = self.__luvut[i]
@@ -113,15 +111,15 @@ class IntJoukko:
         return z
 
     def __str__(self):
-        if self.__indeksi == 0:
+        if self.__alkioiden_lkm == 0:
             return "{}"
-        elif self.__indeksi == 1:
+        elif self.__alkioiden_lkm == 1:
             return "{" + str(self.__luvut[0]) + "}"
         else:
             tuotos = "{"
-            for i in range(0, self.__indeksi - 1):
+            for i in range(0, self.__alkioiden_lkm - 1):
                 tuotos = tuotos + str(self.__luvut[i])
                 tuotos = tuotos + ", "
-            tuotos = tuotos + str(self.__luvut[self.__indeksi - 1])
+            tuotos = tuotos + str(self.__luvut[self.__alkioiden_lkm - 1])
             tuotos = tuotos + "}"
             return tuotos
