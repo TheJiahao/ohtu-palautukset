@@ -93,18 +93,15 @@ class IntJoukko:
         return tulos
 
     @staticmethod
-    def erotus(a, b):
-        z = IntJoukko()
-        a_taulu = a.to_int_list()
-        b_taulu = b.to_int_list()
+    def erotus(a: "IntJoukko", b: "IntJoukko"):
+        tulos = IntJoukko()
+        poistettavat = set(b.to_int_list())
 
-        for i in range(0, len(a_taulu)):
-            z.lisaa(a_taulu[i])
+        for alkio in a.to_int_list():
+            if alkio not in poistettavat:
+                tulos.lisaa(alkio)
 
-        for i in range(0, len(b_taulu)):
-            z.poista(b_taulu[i])
-
-        return z
+        return tulos
 
     def __str__(self):
         if self.__alkioiden_lkm == 0:
