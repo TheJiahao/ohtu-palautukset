@@ -95,16 +95,8 @@ class IntJoukko:
 
         return tulos
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.__alkioiden_lkm == 0:
             return "{}"
-        elif self.__alkioiden_lkm == 1:
-            return "{" + str(self.__luvut[0]) + "}"
-        else:
-            tuotos = "{"
-            for i in range(0, self.__alkioiden_lkm - 1):
-                tuotos = tuotos + str(self.__luvut[i])
-                tuotos = tuotos + ", "
-            tuotos = tuotos + str(self.__luvut[self.__alkioiden_lkm - 1])
-            tuotos = tuotos + "}"
-            return tuotos
+
+        return str(set(self.__luvut[0 : self.__alkioiden_lkm]))
