@@ -13,6 +13,11 @@ class IntJoukko:
 
         self.__alkioiden_lkm = self.__alkioiden_lkm - 1
 
+    def __kasvata_listaa(self):
+        uusi_lista = self._luo_lista(self.__alkioiden_lkm + self.__kasvatuskoko)
+        self.kopioi_lista(self.__luvut, uusi_lista)
+        self.__luvut = uusi_lista
+
     def __init__(
         self, kapasiteetti: int = KAPASITEETTI, kasvatuskoko: int = OLETUSKASVATUS
     ):
@@ -35,9 +40,7 @@ class IntJoukko:
         self.__alkioiden_lkm += 1
 
         if self.__alkioiden_lkm == len(self.__luvut) - 1:
-            uusi_lista = self._luo_lista(self.__alkioiden_lkm + self.__kasvatuskoko)
-            self.kopioi_lista(self.__luvut, uusi_lista)
-            self.__luvut = uusi_lista
+            self.__kasvata_listaa()
 
     def poista(self, poistettava) -> None:
         if not self.kuuluu(poistettava):
@@ -54,12 +57,7 @@ class IntJoukko:
         return self.__alkioiden_lkm
 
     def to_int_list(self) -> list[int]:
-        taulu = self._luo_lista(self.__alkioiden_lkm)
-
-        for i in range(0, len(taulu)):
-            taulu[i] = self.__luvut[i]
-
-        return taulu
+        return self.__luvut[0 : self.__alkioiden_lkm]
 
     @staticmethod
     def muunna_int_joukoksi(joukko: set[int]):
