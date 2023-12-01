@@ -62,38 +62,28 @@ class IntJoukko:
         return taulu
 
     @staticmethod
-    def yhdiste(a: "IntJoukko", b: "IntJoukko"):
+    def muunna_int_joukoksi(joukko: set[int]):
         tulos = IntJoukko()
-        yhdiste = a.to_int_list()
-        yhdiste.extend(b.to_int_list())
 
-        for alkio in yhdiste:
+        for alkio in joukko:
             tulos.lisaa(alkio)
 
         return tulos
 
     @staticmethod
+    def yhdiste(a: "IntJoukko", b: "IntJoukko"):
+        yhdiste = set.union(set(a.to_int_list()), set(b.to_int_list()))
+        return IntJoukko.muunna_int_joukoksi(yhdiste)
+
+    @staticmethod
     def leikkaus(a, b):
-        tulos = IntJoukko()
-        a_taulu = a.to_int_list()
-        b_joukko = set(b.to_int_list())
-
-        for alkio in a_taulu:
-            if alkio in b_joukko:
-                tulos.lisaa(alkio)
-
-        return tulos
+        leikkaus = set.intersection(set(a.to_int_list()), set(b.to_int_list()))
+        return IntJoukko.muunna_int_joukoksi(leikkaus)
 
     @staticmethod
     def erotus(a: "IntJoukko", b: "IntJoukko"):
-        tulos = IntJoukko()
-        poistettavat = set(b.to_int_list())
-
-        for alkio in a.to_int_list():
-            if alkio not in poistettavat:
-                tulos.lisaa(alkio)
-
-        return tulos
+        erotus = set(a.to_int_list()).difference(set(b.to_int_list()))
+        return IntJoukko.muunna_int_joukoksi(erotus)
 
     def __str__(self) -> str:
         if self.__alkioiden_lkm == 0:
