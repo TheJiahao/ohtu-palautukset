@@ -7,6 +7,12 @@ class IntJoukko:
     def _luo_lista(self, koko) -> list[int]:
         return [0] * koko
 
+    def __siirra_vasemmalle(self, indeksi: int) -> None:
+        for j in range(indeksi, self.__alkioiden_lkm - 1):
+            self.__luvut[j] = self.__luvut[j + 1]
+
+        self.__alkioiden_lkm = self.__alkioiden_lkm - 1
+
     def __init__(
         self, kapasiteetti: int = KAPASITEETTI, kasvatuskoko: int = OLETUSKASVATUS
     ):
@@ -33,26 +39,12 @@ class IntJoukko:
             self.kopioi_lista(self.__luvut, uusi_lista)
             self.__luvut = uusi_lista
 
-    def poista(self, n):
-        kohta = -1
-        apu = 0
+    def poista(self, poistettava) -> None:
+        if not self.kuuluu(poistettava):
+            return
 
-        for i in range(0, self.__alkioiden_lkm):
-            if n == self.__luvut[i]:
-                kohta = i  # siis luku löytyy tuosta kohdasta :D
-                self.__luvut[kohta] = 0
-                break
-
-        if kohta != -1:
-            for j in range(kohta, self.__alkioiden_lkm - 1):
-                apu = self.__luvut[j]
-                self.__luvut[j] = self.__luvut[j + 1]
-                self.__luvut[j + 1] = apu
-
-            self.__alkioiden_lkm = self.__alkioiden_lkm - 1
-            return True
-
-        return False
+        indeksi = self.__luvut[0 : self.__alkioiden_lkm].index(poistettava)
+        self.__siirra_vasemmalle(indeksi)
 
     def kopioi_lista(self, vanha, uusi):
         for i in range(0, len(vanha)):
