@@ -4,7 +4,7 @@ OLETUSKASVATUS = 5
 
 class IntJoukko:
     # tämä metodi on ainoa tapa luoda listoja
-    def _luo_lista(self, koko):
+    def _luo_lista(self, koko) -> list[int]:
         return [0] * koko
 
     def __init__(
@@ -61,7 +61,7 @@ class IntJoukko:
     def mahtavuus(self):
         return self.__alkioiden_lkm
 
-    def to_int_list(self):
+    def to_int_list(self) -> list[int]:
         taulu = self._luo_lista(self.__alkioiden_lkm)
 
         for i in range(0, len(taulu)):
@@ -70,31 +70,27 @@ class IntJoukko:
         return taulu
 
     @staticmethod
-    def yhdiste(a, b):
-        x = IntJoukko()
-        a_taulu = a.to_int_list()
-        b_taulu = b.to_int_list()
+    def yhdiste(a: "IntJoukko", b: "IntJoukko"):
+        tulos = IntJoukko()
+        yhdiste = a.to_int_list()
+        yhdiste.extend(b.to_int_list())
 
-        for i in range(0, len(a_taulu)):
-            x.lisaa(a_taulu[i])
+        for alkio in yhdiste:
+            tulos.lisaa(alkio)
 
-        for i in range(0, len(b_taulu)):
-            x.lisaa(b_taulu[i])
-
-        return x
+        return tulos
 
     @staticmethod
     def leikkaus(a, b):
-        y = IntJoukko()
+        tulos = IntJoukko()
         a_taulu = a.to_int_list()
-        b_taulu = b.to_int_list()
+        b_joukko = set(b.to_int_list())
 
-        for i in range(0, len(a_taulu)):
-            for j in range(0, len(b_taulu)):
-                if a_taulu[i] == b_taulu[j]:
-                    y.lisaa(b_taulu[j])
+        for alkio in a_taulu:
+            if alkio in b_joukko:
+                tulos.lisaa(alkio)
 
-        return y
+        return tulos
 
     @staticmethod
     def erotus(a, b):
