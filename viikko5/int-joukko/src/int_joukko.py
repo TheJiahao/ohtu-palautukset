@@ -13,14 +13,14 @@ class IntJoukko:
 
         self.__alkioiden_lkm = self.__alkioiden_lkm - 1
 
-    def __kasvata_listaa(self):
+    def __kasvata_listaa(self) -> None:
         uusi_lista = self._luo_lista(self.__alkioiden_lkm + self.__kasvatuskoko)
         self.kopioi_lista(self.__luvut, uusi_lista)
         self.__luvut = uusi_lista
 
     def __init__(
         self, kapasiteetti: int = KAPASITEETTI, kasvatuskoko: int = OLETUSKASVATUS
-    ):
+    ) -> None:
         if kapasiteetti < 0 or kasvatuskoko < 0:
             raise ValueError("Virheellinen kapasiteetti tai kasvatuskoko")
 
@@ -49,7 +49,7 @@ class IntJoukko:
         indeksi = self.__luvut[0 : self.__alkioiden_lkm].index(poistettava)
         self.__siirra_vasemmalle(indeksi)
 
-    def kopioi_lista(self, vanha, uusi):
+    def kopioi_lista(self, vanha, uusi) -> None:
         for i in range(0, len(vanha)):
             uusi[i] = vanha[i]
 
@@ -60,7 +60,7 @@ class IntJoukko:
         return self.__luvut[0 : self.__alkioiden_lkm]
 
     @staticmethod
-    def muunna_int_joukoksi(joukko: set[int]):
+    def muunna_int_joukoksi(joukko: set[int]) -> "IntJoukko":
         tulos = IntJoukko()
 
         for alkio in joukko:
@@ -69,17 +69,17 @@ class IntJoukko:
         return tulos
 
     @staticmethod
-    def yhdiste(a: "IntJoukko", b: "IntJoukko"):
+    def yhdiste(a: "IntJoukko", b: "IntJoukko") -> "IntJoukko":
         yhdiste = set.union(set(a.to_int_list()), set(b.to_int_list()))
         return IntJoukko.muunna_int_joukoksi(yhdiste)
 
     @staticmethod
-    def leikkaus(a, b):
+    def leikkaus(a: "IntJoukko", b: "IntJoukko") -> "IntJoukko":
         leikkaus = set.intersection(set(a.to_int_list()), set(b.to_int_list()))
         return IntJoukko.muunna_int_joukoksi(leikkaus)
 
     @staticmethod
-    def erotus(a: "IntJoukko", b: "IntJoukko"):
+    def erotus(a: "IntJoukko", b: "IntJoukko") -> "IntJoukko":
         erotus = set(a.to_int_list()).difference(set(b.to_int_list()))
         return IntJoukko.muunna_int_joukoksi(erotus)
 
