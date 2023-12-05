@@ -60,3 +60,11 @@ class HasFewerThan(Matcher):
 
     def test(self, player: Player) -> bool:
         return self.__matcher.test(player)
+
+
+class Or(Matcher):
+    def __init__(self, *matchers: Matcher) -> None:
+        self.__matchers: tuple[Matcher, ...] = matchers
+
+    def test(self, player: Player) -> bool:
+        return True in map(lambda matcher: matcher.test(player), self.__matchers)
