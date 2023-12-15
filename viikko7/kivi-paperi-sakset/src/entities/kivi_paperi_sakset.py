@@ -15,6 +15,9 @@ class KiviPaperiSakset:
         while self._tarkista_siirto(siirto1) and self._tarkista_siirto(siirto2):
             self._tuomari.kirjaa_siirto(siirto1, siirto2)
 
+            self._pelaaja1.aseta_siirto(siirto2)
+            self._pelaaja2.aseta_siirto(siirto1)
+
         return str(self._tuomari)
 
     def _tarkista_siirto(self, siirto: str) -> bool:
