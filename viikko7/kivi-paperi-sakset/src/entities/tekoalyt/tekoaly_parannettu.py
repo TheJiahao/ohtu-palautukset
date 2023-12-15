@@ -1,10 +1,13 @@
+from entities.tekoalyt.tekoaly import Tekoaly
+
+
 # "Muistava tekoäly"
-class TekoalyParannettu:
+class TekoalyParannettu(Tekoaly):
     def __init__(self, muistin_koko):
         self._muisti = [None] * muistin_koko
         self._vapaa_muisti_indeksi = 0
 
-    def aseta_siirto(self, siirto):
+    def aseta_siirto(self, siirto: str) -> None:
         # jos muisti täyttyy, unohdetaan viimeinen alkio
         if self._vapaa_muisti_indeksi == len(self._muisti):
             for i in range(1, len(self._muisti)):
