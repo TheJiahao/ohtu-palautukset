@@ -1,4 +1,4 @@
-from entities.pelaaja import Pelaaja
+from entities.pelaajat.pelaaja import Pelaaja
 from entities.tuomari import Tuomari
 
 
