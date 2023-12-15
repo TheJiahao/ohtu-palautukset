@@ -1,5 +1,3 @@
-from abc import ABC, abstractmethod
-
 from entities.pelaaja import Pelaaja
 from entities.tuomari import Tuomari
 
