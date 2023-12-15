@@ -1,9 +1,10 @@
-from entities.pelaajat.pelaaja import Pelaaja
-from entities.tuomari import Tuomari
 from entities.pelaajat.ihminen_pelaaja import IhminenPelaaja
+from entities.pelaajat.pelaaja import Pelaaja
 from entities.pelaajat.tietokone_pelaaja import TietokonePelaaja
 from entities.tekoalyt.helppo_tekoaly import HelppoTekoaly
 from entities.tekoalyt.tekoaly_parannettu import TekoalyParannettu
+from entities.tuomari import Tuomari
+
 
 class KiviPaperiSakset:
     def __init__(self, pelaaja1: Pelaaja, pelaaja2: Pelaaja) -> None:
@@ -15,7 +16,7 @@ class KiviPaperiSakset:
         siirto1 = self.pelaaja1.anna_siirto()
         siirto2 = self.pelaaja2.anna_siirto()
 
-        while self._tarkista_siirto(siirto1) and self._tarkista_siirto(siirto2):
+        if self._tarkista_siirto(siirto1) and self._tarkista_siirto(siirto2):
             self._tuomari.kirjaa_siirto(siirto1, siirto2)
 
             self.pelaaja1.aseta_siirto(siirto2)
@@ -32,8 +33,12 @@ class KiviPaperiSakset:
 
     @staticmethod
     def luo_helppo_yksinpeli() -> "KiviPaperiSakset":
-        return KiviPaperiSakset(IhminenPelaaja("Pelaaja1"), TietokonePelaaja(HelppoTekoaly()))
+        return KiviPaperiSakset(
+            IhminenPelaaja("Pelaaja1"), TietokonePelaaja(HelppoTekoaly())
+        )
 
     @staticmethod
     def luo_vaikea_yksinpeli() -> "KiviPaperiSakset":
-        return KiviPaperiSakset(IhminenPelaaja("Pelaaja1"), TietokonePelaaja(TekoalyParannettu(10)))
+        return KiviPaperiSakset(
+            IhminenPelaaja("Pelaaja1"), TietokonePelaaja(TekoalyParannettu(10))
+        )
