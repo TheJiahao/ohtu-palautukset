@@ -1,5 +1,6 @@
 from entities.kivi_paperi_sakset import KiviPaperiSakset
 from typing import Callable
+from entities.pelaajat.pelaaja import Pelaaja
 
 
 class Logiikka:
@@ -17,3 +18,9 @@ class Logiikka:
 
     def pelaa(self) -> None:
         self.__peli.pelaa()
+
+    def anna_pelaaja1(self) -> Pelaaja:
+        return self.__peli.pelaaja1
+
+    def anna_pelaaja2(self) -> Pelaaja:
+        return self.__peli.pelaaja2
