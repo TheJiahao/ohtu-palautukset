@@ -8,7 +8,7 @@ class TietokonePelaaja(Pelaaja):
 
         super().__init__("Tietokone")
 
-    def pelaa(self) -> str:
+    def anna_siirto(self) -> str:
         return self.__tekoaly.anna_siirto()
 
     def aseta_siirto(self, siirto: str) -> None:
