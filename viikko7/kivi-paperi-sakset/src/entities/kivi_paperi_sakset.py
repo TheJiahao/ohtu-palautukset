@@ -1,6 +1,6 @@
 from entities.pelaajat.pelaaja import Pelaaja
 from entities.tuomari import Tuomari
-
+from entities.pelaajat.ihminen_pelaaja import IhminenPelaaja
 
 class KiviPaperiSakset:
     def __init__(self, pelaaja1: Pelaaja, pelaaja2: Pelaaja) -> None:
@@ -22,3 +22,7 @@ class KiviPaperiSakset:
 
     def _tarkista_siirto(self, siirto: str) -> bool:
         return siirto in {"k", "p", "s"}
+
+    @staticmethod
+    def luo_kaksinpeli() -> "KiviPaperiSakset":
+        return KiviPaperiSakset(IhminenPelaaja("Pelaaja1"), IhminenPelaaja("Pelaaja2"))
