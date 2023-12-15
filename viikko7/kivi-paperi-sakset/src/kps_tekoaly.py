@@ -1,5 +1,5 @@
 from entities.tuomari import Tuomari
-from tekoaly import Tekoaly
+from entities.tekoalyt.tekoaly import Tekoaly
 
 
 class KPSTekoaly:

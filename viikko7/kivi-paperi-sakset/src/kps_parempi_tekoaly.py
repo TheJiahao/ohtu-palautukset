@@ -1,5 +1,5 @@
 from entities.tuomari import Tuomari
-from tekoaly_parannettu import TekoalyParannettu
+from entities.tekoalyt.tekoaly_parannettu import TekoalyParannettu
 
 
 class KPSParempiTekoaly:
