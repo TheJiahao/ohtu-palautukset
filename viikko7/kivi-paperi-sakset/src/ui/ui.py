@@ -38,11 +38,15 @@ class UI:
         print(self.__ohje)
 
     def kaynnista_kaksinpeli(self) -> None:
-        while True:
-            ekan_siirto = input("Ensimmäisen pelaajan siirto: ")
-            tokan_siirto = input("Toisen pelaajan siirto: ")
+        try:
+            while True:
+                ekan_siirto = input("Ensimmäisen pelaajan siirto: ")
+                tokan_siirto = input("Toisen pelaajan siirto: ")
 
-            self.__logiikka.anna_pelaaja1().aseta_siirto(ekan_siirto)
-            self.__logiikka.anna_pelaaja2().aseta_siirto(tokan_siirto)
+                self.__logiikka.anna_pelaaja1().aseta_siirto(ekan_siirto)
+                self.__logiikka.anna_pelaaja2().aseta_siirto(tokan_siirto)
 
-            self.__logiikka.pelaa()
+                self.__logiikka.pelaa()
+
+        except ValueError:
+            print(self.__logiikka.hae_pelitulos())

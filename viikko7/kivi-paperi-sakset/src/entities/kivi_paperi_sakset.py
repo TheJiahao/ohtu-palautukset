@@ -10,19 +10,21 @@ class KiviPaperiSakset:
     def __init__(self, pelaaja1: Pelaaja, pelaaja2: Pelaaja) -> None:
         self.pelaaja1: Pelaaja = pelaaja1
         self.pelaaja2: Pelaaja = pelaaja2
-        self._tuomari: Tuomari = Tuomari()
+        self.tuomari: Tuomari = Tuomari()
 
     def pelaa(self) -> str:
         siirto1 = self.pelaaja1.anna_siirto()
         siirto2 = self.pelaaja2.anna_siirto()
 
-        if self._tarkista_siirto(siirto1) and self._tarkista_siirto(siirto2):
-            self._tuomari.kirjaa_siirto(siirto1, siirto2)
+        if not (self._tarkista_siirto(siirto1) and self._tarkista_siirto(siirto2)):
+            raise ValueError("Syöte ei kelpaa.")
 
-            self.pelaaja1.aseta_siirto(siirto2)
-            self.pelaaja2.aseta_siirto(siirto1)
+        self.tuomari.kirjaa_siirto(siirto1, siirto2)
 
-        return str(self._tuomari)
+        self.pelaaja1.aseta_siirto(siirto2)
+        self.pelaaja2.aseta_siirto(siirto1)
+
+        return str(self.tuomari)
 
     def _tarkista_siirto(self, siirto: str) -> bool:
         return siirto in {"k", "p", "s"}
