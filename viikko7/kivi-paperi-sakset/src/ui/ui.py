@@ -16,7 +16,11 @@ class UI:
             ]
         )
 
-        self.__pelit: dict[str, Callable] = {"kaksinpeli": self.kaynnista_kaksinpeli}
+        self.__pelit: dict[str, Callable] = {
+            "kaksinpeli": self.kaynnista_kaksinpeli,
+            "helppo": self.kaynnista_yksinpeli,
+            "vaikea": self.kaynnista_yksinpeli,
+        }
 
     def kaynnista(self) -> None:
         while True:
@@ -47,6 +51,22 @@ class UI:
                 self.__logiikka.anna_pelaaja2().aseta_siirto(tokan_siirto)
 
                 self.__logiikka.pelaa()
+
+        except ValueError:
+            print(self.__logiikka.hae_pelitulos())
+
+    def kaynnista_yksinpeli(self) -> None:
+        try:
+            while True:
+                pelaaja1 = self.__logiikka.anna_pelaaja1()
+                tietokone = self.__logiikka.anna_pelaaja2()
+
+                siirto = input(f"Pelaajan {pelaaja1.nimi} siirto: ")
+                pelaaja1.aseta_siirto(siirto)
+
+                siirrot = self.__logiikka.pelaa()
+
+                print(f"Pelaajan {tietokone.nimi} siirto: {siirrot[1]}")
 
         except ValueError:
             print(self.__logiikka.hae_pelitulos())

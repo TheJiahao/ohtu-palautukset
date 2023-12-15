@@ -12,7 +12,7 @@ class KiviPaperiSakset:
         self.pelaaja2: Pelaaja = pelaaja2
         self.tuomari: Tuomari = Tuomari()
 
-    def pelaa(self) -> str:
+    def pelaa(self) -> tuple[str, str]:
         siirto1 = self.pelaaja1.anna_siirto()
         siirto2 = self.pelaaja2.anna_siirto()
 
@@ -24,7 +24,7 @@ class KiviPaperiSakset:
         self.pelaaja1.aseta_siirto(siirto2)
         self.pelaaja2.aseta_siirto(siirto1)
 
-        return str(self.tuomari)
+        return (siirto1, siirto2)
 
     def _tarkista_siirto(self, siirto: str) -> bool:
         return siirto in {"k", "p", "s"}

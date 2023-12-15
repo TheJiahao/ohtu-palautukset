@@ -16,8 +16,8 @@ class Logiikka:
     def aseta_peli(self, pelimuoto: str) -> None:
         self.__peli = self.__pelimuodot[pelimuoto]()
 
-    def pelaa(self) -> None:
-        self.__peli.pelaa()
+    def pelaa(self) -> tuple[str, str]:
+        return self.__peli.pelaa()
 
     def anna_pelaaja1(self) -> Pelaaja:
         return self.__peli.pelaaja1
