@@ -1,4 +1,4 @@
-from tuomari import Tuomari
+from entities.tuomari import Tuomari
 
 
 class KPSPelaajaVsPelaaja:
