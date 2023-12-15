@@ -1,6 +1,9 @@
 from entities.pelaajat.pelaaja import Pelaaja
 from entities.tuomari import Tuomari
 from entities.pelaajat.ihminen_pelaaja import IhminenPelaaja
+from entities.pelaajat.tietokone_pelaaja import TietokonePelaaja
+from entities.tekoalyt.helppo_tekoaly import HelppoTekoaly
+from entities.tekoalyt.tekoaly_parannettu import TekoalyParannettu
 
 class KiviPaperiSakset:
     def __init__(self, pelaaja1: Pelaaja, pelaaja2: Pelaaja) -> None:
@@ -26,3 +29,11 @@ class KiviPaperiSakset:
     @staticmethod
     def luo_kaksinpeli() -> "KiviPaperiSakset":
         return KiviPaperiSakset(IhminenPelaaja("Pelaaja1"), IhminenPelaaja("Pelaaja2"))
+
+    @staticmethod
+    def luo_helppo_yksinpeli() -> "KiviPaperiSakset":
+        return KiviPaperiSakset(IhminenPelaaja("Pelaaja1"), TietokonePelaaja(HelppoTekoaly()))
+
+    @staticmethod
+    def luo_vaikea_yksinpeli() -> "KiviPaperiSakset":
+        return KiviPaperiSakset(IhminenPelaaja("Pelaaja1"), TietokonePelaaja(TekoalyParannettu(10)))
