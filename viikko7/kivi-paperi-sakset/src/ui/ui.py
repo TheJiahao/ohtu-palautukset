@@ -34,10 +34,7 @@ class UI:
         print(self.__ohje)
 
     def __kaynnista_peli(self, vaikeus: str) -> None:
-        try:
-            peli = self.__pelit[vaikeus]()
-        except KeyError as exc:
-            raise ValueError from exc
+        peli = self.__pelit[vaikeus]()
 
         try:
             while True:
