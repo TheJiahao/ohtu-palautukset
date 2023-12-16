@@ -1,4 +1,3 @@
-
 # Luokka pitää kirjaa ensimmäisen ja toisen pelaajan pisteistä sekä tasapelien määrästä.
 class Tuomari:
     def __init__(self):
@@ -15,7 +14,12 @@ class Tuomari:
             self.tokan_pisteet = self.tokan_pisteet + 1
 
     def __str__(self):
-        return f"Pelitilanne: {self.ekan_pisteet} - {self.tokan_pisteet}\nTasapelit: {self.tasapelit}"
+        return "\n".join(
+            [
+                f"Pelitilanne: {self.ekan_pisteet} - {self.tokan_pisteet}",
+                f"Tasapelit: {self.tasapelit}",
+            ]
+        )
 
     # sisäinen metodi, jolla tarkastetaan tuliko tasapeli
     def _tasapeli(self, eka, toka):
