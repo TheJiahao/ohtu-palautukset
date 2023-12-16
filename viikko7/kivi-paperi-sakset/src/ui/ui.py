@@ -7,17 +7,17 @@ class UI:
         self.__ohje: str = "\n".join(
             [
                 "Valitse pelataanko",
-                f"{'kaksinpeli:':15} Ihmistä vastaan",
-                f"{'helppo:':15} Tekoälyä vastaan",
-                f"{'vaikea:':15} Parannettua tekoälyä vastaan",
+                "(a) Ihmistä vastaan",
+                "(b) Tekoälyä vastaan",
+                "(c) Parannettua tekoälyä vastaan",
                 "Muilla valinnoilla lopetetaan",
             ]
         )
 
         self.__pelit: dict[str, Callable] = {
-            "kaksinpeli": KiviPaperiSakset.luo_kaksinpeli,
-            "helppo": KiviPaperiSakset.luo_helppo_yksinpeli,
-            "vaikea": KiviPaperiSakset.luo_vaikea_yksinpeli,
+            "a": KiviPaperiSakset.luo_kaksinpeli,
+            "b": KiviPaperiSakset.luo_helppo_yksinpeli,
+            "c": KiviPaperiSakset.luo_vaikea_yksinpeli,
         }
 
     def kaynnista(self) -> None:
@@ -25,6 +25,7 @@ class UI:
             self.__tulosta_ohje()
 
             vaikeus = input()
+
             try:
                 self.__kaynnista_peli(vaikeus)
             except KeyError:
