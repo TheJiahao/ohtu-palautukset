@@ -15,56 +15,43 @@ class UI:
         )
 
         self.__pelit: dict[str, Callable] = {
-            "kaksinpeli": self.kaynnista_kaksinpeli,
-            "helppo": self.kaynnista_yksinpeli,
-            "vaikea": self.kaynnista_yksinpeli,
+            "kaksinpeli": KiviPaperiSakset.luo_kaksinpeli,
+            "helppo": KiviPaperiSakset.luo_helppo_yksinpeli,
+            "vaikea": KiviPaperiSakset.luo_vaikea_yksinpeli,
         }
 
     def kaynnista(self) -> None:
         while True:
-            self.tulosta_ohje()
+            self.__tulosta_ohje()
 
-            vastaus = input()
-
+            vaikeus = input()
             try:
-                self.__pelit[vastaus]()
+                self.__kaynnista_peli(vaikeus)
             except KeyError:
-                break
+                return
 
-    def tulosta_ohje(self) -> None:
+    def __tulosta_ohje(self) -> None:
         print(self.__ohje)
 
-    def kaynnista_kaksinpeli(self) -> None:
-        peli = KiviPaperiSakset.luo_kaksinpeli()
+    def __kaynnista_peli(self, vaikeus: str) -> None:
+        try:
+            peli = self.__pelit[vaikeus]()
+        except KeyError as exc:
+            raise ValueError from exc
 
         try:
             while True:
                 ekan_siirto = input("Ensimmäisen pelaajan siirto: ")
-                tokan_siirto = input("Toisen pelaajan siirto: ")
-
                 peli.pelaaja1.aseta_siirto(ekan_siirto)
-                peli.pelaaja2.aseta_siirto(tokan_siirto)
 
-                peli.pelaa()
+                if vaikeus == "kaksinpeli":
+                    tokan_siirto = input("Toisen pelaajan siirto: ")
+                    peli.pelaaja2.aseta_siirto(tokan_siirto)
 
-        except ValueError:
-            print(peli.hae_pelitulos())
+                siirrot = peli.pelaa()
 
-    def kaynnista_yksinpeli(self, vaikeus: str) -> None:
-        peli = KiviPaperiSakset.luo_helppo_yksinpeli()
-
-        if vaikeus == "vaikea":
-            peli = KiviPaperiSakset.luo_vaikea_yksinpeli()
-
-        try:
-            while True:
-                ekan_siirto = input("Ensimmäisen pelaajan siirto: ")
-                tokan_siirto = input("Toisen pelaajan siirto: ")
-
-                peli.pelaaja1.aseta_siirto(ekan_siirto)
-                peli.pelaaja2.aseta_siirto(tokan_siirto)
-
-                peli.pelaa()
+                if vaikeus != "kaksinpeli":
+                    print(f"Tietokone pelasi: {siirrot[1]}")
 
         except ValueError:
             print(peli.hae_pelitulos())
