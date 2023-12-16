@@ -42,13 +42,13 @@ class UI:
                 ekan_siirto = input("Ensimmäisen pelaajan siirto: ")
                 peli.pelaaja1.aseta_siirto(ekan_siirto)
 
-                if vaikeus == "kaksinpeli":
+                if vaikeus == "a":
                     tokan_siirto = input("Toisen pelaajan siirto: ")
                     peli.pelaaja2.aseta_siirto(tokan_siirto)
 
                 siirrot = peli.pelaa()
 
-                if vaikeus != "kaksinpeli":
+                if vaikeus != "a":
                     print(f"Tietokone pelasi: {siirrot[1]}")
 
         except ValueError:
