@@ -4,9 +4,7 @@ from entities.tekoalyt.tekoaly import Tekoaly
 
 class TietokonePelaaja(Pelaaja):
     def __init__(self, tekoaly: Tekoaly) -> None:
-        self.__tekoaly = tekoaly
-
-        super().__init__("Tietokone")
+        self.__tekoaly: Tekoaly = tekoaly
 
     def anna_siirto(self) -> str:
         return self.__tekoaly.anna_siirto()

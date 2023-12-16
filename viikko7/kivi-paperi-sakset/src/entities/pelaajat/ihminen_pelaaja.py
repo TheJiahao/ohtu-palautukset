@@ -2,9 +2,8 @@ from entities.pelaajat.pelaaja import Pelaaja
 
 
 class IhminenPelaaja(Pelaaja):
-    def __init__(self, nimi: str) -> None:
+    def __init__(self) -> None:
         self.__siirto: str = "k"
-        super().__init__(nimi)
 
     def anna_siirto(self) -> str:
         return self.__siirto
