@@ -1,22 +1,27 @@
 from entities.tekoalyt.tekoaly import Tekoaly
+from collections import deque
 
 
 # "Muistava tekoäly"
 class TekoalyParannettu(Tekoaly):
-    def __init__(self, muistin_koko):
-        self._muisti = [None] * muistin_koko
+    def __init__(self, muistin_koko: int) -> None:
+        self._muisti = deque(maxlen=muistin_koko)
+        self.__muistin_koko: int = muistin_koko
         self._vapaa_muisti_indeksi = 0
+        self.__frekvenssit: dict[str, int] = {"k": 0, "p": 0, "s": 0}
+        self.__voittavat_siirrot: dict[str, str] = {"k": "p", "p": "s", "s": "k"}
 
     def aseta_siirto(self, siirto: str) -> None:
-        # jos muisti täyttyy, unohdetaan viimeinen alkio
-        if self._vapaa_muisti_indeksi == len(self._muisti):
-            for i in range(1, len(self._muisti)):
-                self._muisti[i - 1] = self._muisti[i]
+        if len(self._muisti) >= self.__muistin_koko:
+            poistettava = self._muisti[-1]
+            self.__frekvenssit[poistettava] -= 1
 
-            self._vapaa_muisti_indeksi = self._vapaa_muisti_indeksi - 1
+        poistettava = self._muisti[-1]
 
-        self._muisti[self._vapaa_muisti_indeksi] = siirto
-        self._vapaa_muisti_indeksi = self._vapaa_muisti_indeksi + 1
+        self.__frekvenssit[siirto] += 1
+        self.__frekvenssit[poistettava] -= 1
+
+        self._muisti.append(siirto)
 
     def anna_siirto(self):
         if self._vapaa_muisti_indeksi == 0 or self._vapaa_muisti_indeksi == 1:
