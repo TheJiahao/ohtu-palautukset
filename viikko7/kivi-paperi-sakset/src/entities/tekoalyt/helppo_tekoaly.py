@@ -2,19 +2,13 @@ from entities.tekoalyt.tekoaly import Tekoaly
 
 
 class HelppoTekoaly(Tekoaly):
-    def __init__(self):
-        self._siirto = 0
+    def __init__(self) -> None:
+        self.__seuraava_siirto: int = 0
+        self.__siirrot: list[str] = ["k", "p", "s"]
 
     def anna_siirto(self):
-        self._siirto = self._siirto + 1
-        self._siirto = self._siirto % 3
+        self.__seuraava_siirto = (self.__seuraava_siirto + 1) % 3
+        return self.__siirrot[self.__seuraava_siirto]
 
-        if self._siirto == 0:
-            return "k"
-        elif self._siirto == 1:
-            return "p"
-        else:
-            return "s"
-
-    def aseta_siirto(self, siirto:str) -> None:
+    def aseta_siirto(self, siirto: str) -> None:
         pass
