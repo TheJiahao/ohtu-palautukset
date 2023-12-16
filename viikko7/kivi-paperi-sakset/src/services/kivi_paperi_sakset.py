@@ -10,7 +10,7 @@ class KiviPaperiSakset:
     def __init__(self, pelaaja1: Pelaaja, pelaaja2: Pelaaja) -> None:
         self.pelaaja1: Pelaaja = pelaaja1
         self.pelaaja2: Pelaaja = pelaaja2
-        self.tuomari: Tuomari = Tuomari()
+        self.__tuomari: Tuomari = Tuomari()
 
     def pelaa(self) -> tuple[str, str]:
         siirto1 = self.pelaaja1.anna_siirto()
@@ -19,7 +19,7 @@ class KiviPaperiSakset:
         if not (self._tarkista_siirto(siirto1) and self._tarkista_siirto(siirto2)):
             raise ValueError("Syöte ei kelpaa.")
 
-        self.tuomari.kirjaa_siirto(siirto1, siirto2)
+        self.__tuomari.kirjaa_siirto(siirto1, siirto2)
 
         self.pelaaja1.aseta_siirto(siirto2)
         self.pelaaja2.aseta_siirto(siirto1)
@@ -28,6 +28,9 @@ class KiviPaperiSakset:
 
     def _tarkista_siirto(self, siirto: str) -> bool:
         return siirto in {"k", "p", "s"}
+
+    def hae_pelitulos(self) -> str:
+        return str(self.__tuomari)
 
     @staticmethod
     def luo_kaksinpeli() -> "KiviPaperiSakset":

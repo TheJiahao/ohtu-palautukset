@@ -1,11 +1,9 @@
-from services.logiikka import Logiikka
+from services.kivi_paperi_sakset import KiviPaperiSakset
 from typing import Callable
 
 
 class UI:
-    def __init__(self, logiikka: Logiikka | None = None) -> None:
-        self.__logiikka: Logiikka = logiikka or Logiikka()
-
+    def __init__(self) -> None:
         self.__ohje: str = "\n".join(
             [
                 "Valitse pelataanko",
@@ -28,45 +26,45 @@ class UI:
 
             vastaus = input()
 
-            if vastaus in self.__pelit:
-                print(
-                    "Peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s"
-                )
-
-                self.__logiikka.aseta_peli(vastaus)
+            try:
                 self.__pelit[vastaus]()
-
-            break
+            except KeyError:
+                break
 
     def tulosta_ohje(self) -> None:
         print(self.__ohje)
 
     def kaynnista_kaksinpeli(self) -> None:
+        peli = KiviPaperiSakset.luo_kaksinpeli()
+
         try:
             while True:
                 ekan_siirto = input("Ensimmäisen pelaajan siirto: ")
                 tokan_siirto = input("Toisen pelaajan siirto: ")
 
-                self.__logiikka.anna_pelaaja1().aseta_siirto(ekan_siirto)
-                self.__logiikka.anna_pelaaja2().aseta_siirto(tokan_siirto)
+                peli.pelaaja1.aseta_siirto(ekan_siirto)
+                peli.pelaaja2.aseta_siirto(tokan_siirto)
 
-                self.__logiikka.pelaa()
+                peli.pelaa()
 
         except ValueError:
-            print(self.__logiikka.hae_pelitulos())
+            print(peli.hae_pelitulos())
 
-    def kaynnista_yksinpeli(self) -> None:
+    def kaynnista_yksinpeli(self, vaikeus: str) -> None:
+        peli = KiviPaperiSakset.luo_helppo_yksinpeli()
+
+        if vaikeus == "vaikea":
+            peli = KiviPaperiSakset.luo_vaikea_yksinpeli()
+
         try:
             while True:
-                pelaaja1 = self.__logiikka.anna_pelaaja1()
-                tietokone = self.__logiikka.anna_pelaaja2()
+                ekan_siirto = input("Ensimmäisen pelaajan siirto: ")
+                tokan_siirto = input("Toisen pelaajan siirto: ")
 
-                siirto = input(f"Pelaajan {pelaaja1.nimi} siirto: ")
-                pelaaja1.aseta_siirto(siirto)
+                peli.pelaaja1.aseta_siirto(ekan_siirto)
+                peli.pelaaja2.aseta_siirto(tokan_siirto)
 
-                siirrot = self.__logiikka.pelaa()
-
-                print(f"Pelaajan {tietokone.nimi} siirto: {siirrot[1]}")
+                peli.pelaa()
 
         except ValueError:
-            print(self.__logiikka.hae_pelitulos())
+            print(peli.hae_pelitulos())

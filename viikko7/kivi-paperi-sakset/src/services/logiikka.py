@@ -26,4 +26,4 @@ class Logiikka:
         return self.__peli.pelaaja2
 
     def hae_pelitulos(self) -> str:
-        return str(self.__peli.tuomari)
+        return str(self.__peli.__tuomari)
