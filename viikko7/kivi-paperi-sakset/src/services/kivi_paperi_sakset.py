@@ -34,16 +34,16 @@ class KiviPaperiSakset:
 
     @staticmethod
     def luo_kaksinpeli() -> "KiviPaperiSakset":
-        return KiviPaperiSakset(IhminenPelaaja("Pelaaja1"), IhminenPelaaja("Pelaaja2"))
+        return KiviPaperiSakset(IhminenPelaaja(), IhminenPelaaja())
 
     @staticmethod
     def luo_helppo_yksinpeli() -> "KiviPaperiSakset":
         return KiviPaperiSakset(
-            IhminenPelaaja("Pelaaja1"), TietokonePelaaja(HelppoTekoaly())
+            IhminenPelaaja(), TietokonePelaaja(HelppoTekoaly())
         )
 
     @staticmethod
     def luo_vaikea_yksinpeli() -> "KiviPaperiSakset":
         return KiviPaperiSakset(
-            IhminenPelaaja("Pelaaja1"), TietokonePelaaja(TekoalyParannettu(10))
+            IhminenPelaaja(), TietokonePelaaja(TekoalyParannettu(10))
         )
