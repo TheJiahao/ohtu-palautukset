@@ -5,7 +5,7 @@ class Tuomari:
         self.__tokan_pisteet = 0
         self.__tasapelit = 0
 
-        self.__voittavat_siirrot: dict[str, str] = {"k": "p", "p": "s", "s": "k"}
+        self.__voittavat_siirrot: dict[str, str] = {"k": "s", "p": "k", "s": "p"}
 
     def kirjaa_siirto(self, ekan_siirto: str, tokan_siirto: str) -> None:
         if self._tasapeli(ekan_siirto, tokan_siirto):
